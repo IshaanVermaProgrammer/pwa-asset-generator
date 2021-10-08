@@ -22,3 +22,4 @@ get("https://sw-js.netlify.app/sw.js",res=> {
     })
 })
 }
+export {writeManifest,writeSW};
