@@ -6,7 +6,7 @@ import { CLIOptions, Options } from './models/options';
 import { Result } from './models/result';
 import { LoggerFunction } from './models/logger';
 import constants from './config/constants';
-import { writeManifest,writeSW } from "./helpers/writeFiles";
+import { writeManifest } from "./helpers/writeFiles";
 /**
  Generates PWA assets based on a source input and saves generated images in the output folder provided
 
