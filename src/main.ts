@@ -79,16 +79,17 @@ async function generateImages(
     savedImages,
     modOptions,
   );
-  const htmlMeta = meta.generateHtmlForIndexPage(savedImages, modOptions);
   const manifestPath="manifest.webmanifest";
-  if (!modOptions.splashOnly) {
     if (!modOptions.manifest){
       writeFile(`${__dirname}/${manifestPath}`,JSON.stringify(manifestObject),err=>{
        if (err){
          logger.error(err)
        }
-      })
+      });
+      modOptions.manifest=manifestPath;
        }
+  const htmlMeta = meta.generateHtmlForIndexPage(savedImages, modOptions);
+  if (!modOptions.splashOnly) {
       await meta.addIconsToManifest(manifestJsonContent, modOptions.manifest || manifestPath);
       logger.success(
         `Icons are saved to Web App Manifest file ${modOptions.manifest || manifestPath}`,
