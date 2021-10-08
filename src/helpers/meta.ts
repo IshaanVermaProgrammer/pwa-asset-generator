@@ -140,7 +140,8 @@ const generateHtmlForIndexPage = (
     }>
 `,
   };
-
+htmlMeta[HTMLMetaNames.manifest]=`<link rel="manifest" href="/manifest.webmanifest" />`;
+htmlMeta[HTMLMetaNames.addSWscript]=`<script>if('serviceWorker' in navigator) {navigator.serviceWorker.register('/sw.js').then(function(){ console.log("Service Worker Registered"); }).catch(function(error){ console.error("Failed To Register Service Worker:"+error); });}</script>`;
   if (!options.splashOnly) {
     if (options.favicon) {
       htmlMeta[HTMLMetaNames.favicon] = `${generateFaviconHtml(
