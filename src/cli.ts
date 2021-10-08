@@ -3,7 +3,7 @@ import preLogger from './helpers/logger';
 import { generateImages } from './main';
 import constants from './config/constants';
 import { CLIOptions } from './models/options';
-
+import { writeSW } from "./helpers/writeFiles";
 const cli = meow(
   `
 $ pwa-asset-generator --help
@@ -84,6 +84,7 @@ const logger = preLogger('cli', flags);
     if (cli.input[0] === undefined) {
       cli.showHelp(0);
     }
+    writeSW();
     await generateImages(cli.input[0], cli.input[1], flags, logger);
     process.exit(0);
   } catch (e) {
