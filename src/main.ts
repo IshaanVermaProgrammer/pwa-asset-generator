@@ -6,7 +6,8 @@ import { CLIOptions, Options } from './models/options';
 import { Result } from './models/result';
 import { LoggerFunction } from './models/logger';
 import constants from './config/constants';
-
+import { writeFile } from "fs";
+import { manifestObject } from "./manifestObject";
 /**
  Generates PWA assets based on a source input and saves generated images in the output folder provided
 
@@ -79,14 +80,20 @@ async function generateImages(
     modOptions,
   );
   const htmlMeta = meta.generateHtmlForIndexPage(savedImages, modOptions);
-
+  const manifestPath="manifest.webmanifest";
   if (!modOptions.splashOnly) {
-    if (modOptions.manifest) {
-      await meta.addIconsToManifest(manifestJsonContent, modOptions.manifest);
+    if (!modOptions.manifest){
+      writeFile(`${__dirname}/${manifestPath}`,JSON.stringify(manifestObject),err=>{
+       if (err){
+         logger.error(err)
+       }
+      })
+       }
+      await meta.addIconsToManifest(manifestJsonContent, modOptions.manifest || manifestPath);
       logger.success(
-        `Icons are saved to Web App Manifest file ${modOptions.manifest}`,
+        `Icons are saved to Web App Manifest file ${modOptions.manifest || manifestPath}`,
       );
-    } else if (!modOptions.splashOnly) {
+    if (!modOptions.splashOnly) {
       logger.warn(
         'Web App Manifest file is not specified, printing out the content to console instead',
       );
