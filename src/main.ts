@@ -81,9 +81,9 @@ async function generateImages(
     writeManifest(modOptions);
   const htmlMeta = meta.generateHtmlForIndexPage(savedImages, modOptions);
   if (!modOptions.splashOnly) {
-      await meta.addIconsToManifest(manifestJsonContent, modOptions.manifest || manifestPath);
+      await meta.addIconsToManifest(manifestJsonContent, modOptions.manifest);
       logger.success(
-        `Icons are saved to Web App Manifest file ${modOptions.manifest || manifestPath}`,
+        `Icons are saved to Web App Manifest file ${modOptions.manifest}`,
       );
     if (!modOptions.splashOnly) {
       logger.warn(
