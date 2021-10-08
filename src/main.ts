@@ -6,8 +6,7 @@ import { CLIOptions, Options } from './models/options';
 import { Result } from './models/result';
 import { LoggerFunction } from './models/logger';
 import constants from './config/constants';
-import { writeFile } from "fs";
-import { manifestObject } from "./manifestObject";
+import { writeManifest,writeSW } from "./helpers/writeFiles";
 /**
  Generates PWA assets based on a source input and saves generated images in the output folder provided
 
@@ -78,16 +77,8 @@ async function generateImages(
   const manifestJsonContent = meta.generateIconsContentForManifest(
     savedImages,
     modOptions,
-  );
-  const manifestPath="manifest.webmanifest";
-    if (!modOptions.manifest){
-      writeFile(`${__dirname}/${manifestPath}`,JSON.stringify(manifestObject),err=>{
-       if (err){
-         logger.error(err)
-       }
-      });
-      modOptions.manifest=manifestPath;
-       }
+  );  
+    writeManifest(modOptions);
   const htmlMeta = meta.generateHtmlForIndexPage(savedImages, modOptions);
   if (!modOptions.splashOnly) {
       await meta.addIconsToManifest(manifestJsonContent, modOptions.manifest || manifestPath);
